@@ -26,11 +26,14 @@ int main(int argc, char **argv) {
         usage(argc, argv);
     }
 
+    printf("0\n");
+
     int s;
     s = socket(storage.ss_family, SOCK_STREAM, 0);
     if (s == -1) {
         logexit("socket");
     }
+    printf("1\n");
 
     int enable = 1;
     if (0 != setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int))) {
@@ -38,9 +41,12 @@ int main(int argc, char **argv) {
     }
 
     struct sockaddr *addr = (struct sockaddr *)(&storage);
-    if (0 != bind(s, addr, sizeof(storage))) {
+    printf("cara1231 viu\n");
+    if (0 != bind(s, addr, sizeof(struct sockaddr))) {
         logexit("bind");
     }
+    printf("buceta\n");
+
 
     if (0 != listen(s, 10)) {
         logexit("listen");

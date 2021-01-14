@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
     }
 
     struct sockaddr *addr = (struct sockaddr *)(&storage);
-    if (0 != bind(s, addr, sizeof(storage))) {
+    if (0 != bind(s, addr, sizeof(struct sockaddr))) {
         logexit("bind");
     }
 
