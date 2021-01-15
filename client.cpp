@@ -22,16 +22,12 @@ void * client_thread(void *data) {
 	char buf[BUFSZ];
 	memset(buf, 0, BUFSZ);
 	size_t count = -1;
-
-	count = recv(*socket_s, buf, BUFSZ, 0);
-	printf("%s\n", buf);
 	while(1) {
 		if (count == 0) {
-			// Connection terminated.
 			break;
 		}
-		count = recv(*socket_s, buf, BUFSZ, 0);
-		printf("%s\n", buf);
+		fgets(buf, BUFSZ-1, stdin);
+		count = send(*socket_s, buf, strlen(buf)+1, 0);
 	}
 }
 
@@ -58,31 +54,28 @@ int main(int argc, char **argv) {
 	char addrstr[BUFSZ];
 	addrtostr(addr, addrstr, BUFSZ);
 
-	printf("connected to %s\n", addrstr);
-
 	char buf[BUFSZ];
 	memset(buf, 0, BUFSZ);
 	size_t count = -1;
 
 	unsigned total = 0;
 	while(1) {
-		// count = recv(s, buf + total, BUFSZ - total, 0);
-		if (count == 0) {
-			// Connection terminated.
-			break;
-		}
-		fgets(buf, BUFSZ-1, stdin);
-		size_t count = send(s, buf, strlen(buf)+1, 0);
 
 		pthread_t tid;
-		printf("cu 2\n");
 		pthread_create(&tid, NULL, client_thread, &s);
+
+		count = recv(s, buf, BUFSZ, 0);
+		if (count == 0) {
+			break;
+		}
+
+		printf("%s\n", buf);
 		total += count;
 	}
 	close(s);
 
-	printf("received %u bytes\n", total);
-	puts(buf);
+	// printf("received %u bytes\n", total);
+	// puts(buf);
 
 	exit(EXIT_SUCCESS);
 }
