@@ -10,6 +10,9 @@ void logexit(const char *msg) {
 	exit(EXIT_FAILURE);
 }
 
+// Esse módulo foi baseado na implementação disponibilizada pelo professor
+// a única alteração feita foi tirar o suporte a IPV6
+
 int addrparse(const char *addrstr, const char *portstr,
               struct sockaddr_in *addr4_in) {
     if (addrstr == NULL || portstr == NULL) {
