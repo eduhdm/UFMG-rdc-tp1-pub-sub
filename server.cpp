@@ -74,7 +74,7 @@ void add_tag(string message, int client_id) {
         return;
     }
 
-    string feedback = "already subscribed " + message+ '\n';
+    string feedback = "already subscribed " + message + '\n';
     string *client_tags = &client_connections[client_id];
 
     if(!client_has_tag(tag, client_id)) {
@@ -97,6 +97,7 @@ void remove_tag(string message, int client_id) {
     if(client_has_tag(tag, client_id)) {
         string identified_tag = get_identified_tag(tag);
         feedback = "subscribed " + message + '\n';
+
         int pos = client_tags->find(identified_tag);
         client_tags->erase(pos, identified_tag.length());
     }

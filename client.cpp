@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
     char buf[BUFSZ];
     memset(buf, 0, BUFSZ);
 
+    printf("Send a message to the server by typing below:\n");
     while(1) {
         pthread_t tid;
         pthread_create(&tid, NULL, client_thread, &s);
